@@ -97,7 +97,54 @@
 
     <section id="main_content">
 
-<p>Template.</p>
+<h2>What does it do?</h2>
+
+<h3>Short version.</h3>
+
+<p>It gets all configured git repositories and checks out every branch and then checks out the default branch.</p>
+
+<h3>Long version.</h3>
+
+<p>Variables used are defined within <code>getrepos.conf</code>.</p>
+
+<p>These variables tell <code>getrepos</code> all information required to download a list of repositories.</p>
+
+<h4>Variables used.</h4>
+
+<table><thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>git_repo</code></td>
+<td>variable</td>
+<td>This is the location of the base git repository.</td>
+</tr>
+<tr>
+<td><code>git_repo_list</code></td>
+<td>array</td>
+<td>A listing of all repositories to download.</td>
+</tr>
+<tr>
+<td><code>ext</code></td>
+<td>variable</td>
+<td>The git repository extension.</td>
+</tr>
+</tbody></table>
+
+<p><code>getrepos</code> goes through each repository within <code>git_repo_list</code> and performs the following actions in this order:</p>
+
+<ul>
+<li>Checks if the repository exists. The following actions are only performed on new repositories.</li>
+<li>Clones the repository.</li>
+<li>Gathers information on the default branches.</li>
+<li>Queries the server for all remote branches.</li>
+<li>Strips information from the branch names. eg. origin/</li>
+<li>Checks out each branch to make sure you have local versions. (I do this so IDE&#39;s like atom can see the branches correctly.)</li>
+</ul>
 
     </section>
   </div>
