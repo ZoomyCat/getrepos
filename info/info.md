@@ -30,7 +30,7 @@ name | type | description
 6. Checks out each branch to make sure you have local versions. (I do this so IDE's like atom can see the branches correctly.)
 7. Checks out the default branch to make sure you are in the branch you would have normally been in after a clone.
 
-## What it does not do.
+#### What it does not do.
 
 It doesnt update the branches if you are not cloning the branch fresh.
 
