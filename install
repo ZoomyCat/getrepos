@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+##Created by Edward "edge226" Tunnah.
+
+## installs getrepos
+
+## Check for root! If the user is not running the script as root advise
+## that root is required to operate this script and then drop out. If
+## the script is run as root then continue.
+if [ "$EUID" != "0" ]; then
+printf "error: This script must be run as root.\n"
+exit 1
+fi
+
+bin="/usr/local/bin"
+conf="/etc/getrepos"
+
+if [[ ! -d "$bin" ]]
+then
+  mkdir -p "$bin"
+fi
+if [[ ! -d "$conf" ]]
+then
+  mkdir -p "$conf"
+fi
+printf '\n%s %s %s\n' "rsyncing getrepos" "to" "$bin"
+rsync -rvp "getrepos" "$bin"
+printf '\n%s %s %s\n' "rsyncing getrepos.conf" "to" "$conf"
+rsync -rvp "getrepos.conf" "$conf"
+printf '\n'
