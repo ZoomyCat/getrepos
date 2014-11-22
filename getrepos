@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+##Created by Edward "edge226" Tunnah.
+
+source ./getrepos/getrepos.conf
+
+for repo in "${git_repos[@]}"
+do
+  if [[ ! -d "$repo" ]]
+    then
+    git clone git@github.com:edge226/"$repo".git
+    cd "$repo"
+    ##printf '\n%s\n' "Printing out the remotes: "
+    branch=$(git branch)
+    branch=${branch#* }
+    for line in $(git branch -r)
+    do
+      ##printf '\n%s\n' "$line"
+      if [[ "$line" != "origin/HEAD" ]] && [[ "$line" != "origin/master" ]] && [[ "$line" != "->" ]]
+        then
+          remote=${line##*/}
+          git checkout "$remote"
+      fi
+    done
+    git checkout "$branch"
+    cd ../
+
+    printf '\n'
+  fi
+done
