@@ -1,4 +1,3 @@
-get-lucid-dev-repos
-===================
+## Whats this do?
 
-Some scripts to automatically pull the lucid dev repos into existence.
+It gets all configured git repositories and checks out every branch and then checks out the default branch.

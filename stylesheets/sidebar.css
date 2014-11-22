@@ -1,0 +1,94 @@
+.sidebar{
+  position: absolute;
+  height: 100%;
+  width: 20%;
+  left 0px;
+  float: left;
+}
+
+.subtree{
+  display: none;
+  margin-left: -22px;
+}
+
+.menu-heading-box:checked + .subtree {
+  display: block;
+}
+
+.tree li {
+  line-height: 2.3;
+}
+
+.tree > li > .menu-heading {
+  color: #90e853;
+  border-radius: 50px;
+}
+
+.menu-heading {
+  -webkit-transition: ease 1.5s;
+  -o-transition: ease 1.5s;
+  -moz-transition: ease 1.5s;
+  transition: ease 1.5s;
+}
+
+.menu-entry {
+  color: #A680EE;
+  text-decoration: none;
+  -webkit-transition: ease 1.5s;
+  -o-transition: ease 1.5s;
+  -moz-transition: ease 1.5s;
+  transition: ease 1.5s;
+}
+
+.menu-subheading {
+  color: #90e853;
+  cursor: pointer;
+  -webkit-transition: ease 1.5s;
+  -o-transition: ease 1.5s;
+  -moz-transition: ease 1.5s;
+  transition: ease 1.5s;
+}
+
+.menu-heading:hover {
+  background: #0b0735;
+  padding: 8px 18px;
+  border-radius: 50px;
+  -webkit-transition: ease 0.75s;
+  -o-transition: ease 0.75s;
+  -moz-transition: ease 0.75s;
+  transition: ease 0.75s;
+}
+
+.menu-subheading:hover {
+  background: #0b0735;
+  padding: 8px 18px;
+  border-radius: 50px;
+  -webkit-transition: ease 0.75s;
+  -o-transition: ease 0.75s;
+  -moz-transition: ease 0.75s;
+  transition: ease 0.75s;
+}
+
+.menu-entry:hover{
+  background: #0b0735;
+  padding: 8px 18px;
+  border-radius: 50px;
+  -webkit-transition: ease 0.75s;
+  -o-transition: ease 0.75s;
+  -moz-transition: ease 0.75s;
+  transition: ease 0.75s;
+}
+
+.sidebar ul li:before {
+  margin-right: 0px;
+  content: "";
+}
+
+.sidebar ul {
+  margin-bottom: 0px;
+}
+
+/*  Removes the visible checkbox. */
+ .menu-heading-box {
+  display: none;
+}
