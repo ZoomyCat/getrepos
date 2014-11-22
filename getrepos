@@ -3,11 +3,11 @@
 
 source ./getrepos/getrepos.conf
 
-for repo in "${git_repos[@]}"
+for repo in "${git_repo_list[@]}"
 do
   if [[ ! -d "$repo" ]]
     then
-    git clone git@github.com:edge226/"$repo".git
+    git clone "$git_repo/$repo$ext"
     cd "$repo"
     branch=$(git branch)
     branch=${branch#* }
