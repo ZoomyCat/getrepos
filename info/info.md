@@ -21,7 +21,8 @@ name | type | description
 `getrepos` goes through each repository within `git_repo_list` and performs the following actions in this order:
 * Checks if the repository exists. The following actions are only performed on new repositories.
 * Clones the repository.
-* Gathers information on the default branches.
+* Gathers information on the default branch.
 * Queries the server for all remote branches.
 * Strips information from the branch names. eg. origin/
 * Checks out each branch to make sure you have local versions. (I do this so IDE's like atom can see the branches correctly.)
+* Checks out the default branch to make sure you are in the branch you would have normally been in after a clone.
