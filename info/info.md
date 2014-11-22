@@ -27,3 +27,9 @@ name | type | description
 5. Strips information from the branch names. eg. origin/
 6. Checks out each branch to make sure you have local versions. (I do this so IDE's like atom can see the branches correctly.)
 7. Checks out the default branch to make sure you are in the branch you would have normally been in after a clone.
+
+## Dependencies
+
+The only dependency `getrepos` has is `rsync`.
+
+It uses rsync to copy the scripts and configs to the correct place.
