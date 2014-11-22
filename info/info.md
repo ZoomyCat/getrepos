@@ -32,4 +32,4 @@ name | type | description
 
 The only dependency `getrepos` has is `rsync`.
 
-It uses `rsync` to copy the scripts and configs to the correct place.
+It uses `rsync -rvp` to copy the scripts and configs to the correct place.
