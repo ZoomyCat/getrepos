@@ -20,14 +20,14 @@ do
     branch=${branch#* }
     #printf '\n%s %s\n' "Starting branch is:" "$branch"
     #printf '\n%s%s\n' "Printing out the remotes for: " "$repo"
-    for line in $(git branch -r)
+    for branch_entry in $(git branch -r)
     ## Grab all the remotes and process them one at a time.
     do
-      if [[ "$line" != "origin/HEAD" ]] && [[ "$line" != "->" ]] && [[ "$line" != "origin/$branch" ]]
+      if [[ "$branch_entry" != "origin/HEAD" ]] && [[ "$branch_entry" != "->" ]] && [[ "$branch_entry" != "origin/$branch" ]]
         ## Dont bother trying to checkout the HEAD information or the default branch.
         then
         ## Strip off origin/
-        remote=${line##*/}
+        remote=${branch_entry##*/}
         #printf '\n%s\n' "$remote"
         ## checkout the remote.
         git checkout "$remote"
