@@ -9,21 +9,21 @@ do
     then
     git clone git@github.com:edge226/"$repo".git
     cd "$repo"
-    ##printf '\n%s\n' "Printing out the remotes: "
     branch=$(git branch)
     branch=${branch#* }
+    #printf '\n%s %s\n' "Starting branch is:" "$branch"
+    #printf '\n%s%s\n' "Printing out the remotes for: " "$repo"
     for line in $(git branch -r)
     do
-      ##printf '\n%s\n' "$line"
-      if [[ "$line" != "origin/HEAD" ]] && [[ "$line" != "origin/master" ]] && [[ "$line" != "->" ]]
+      if [[ "$line" != "origin/HEAD" ]] && [[ "$line" != "->" ]] && [[ "$line" != "origin/$branch" ]]
         then
-          remote=${line##*/}
-          git checkout "$remote"
+        remote=${line##*/}
+        #printf '\n%s\n' "$remote"
+        git checkout "$remote"
       fi
     done
     git checkout "$branch"
     cd ../
-
     printf '\n'
   fi
 done
