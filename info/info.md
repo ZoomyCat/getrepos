@@ -18,6 +18,8 @@ name | type | description
 `git_repo_list` | array | A listing of all repositories to download.
 `ext` | variable | The git repository extension.
 
+#### How it all works.
+
 `getrepos` goes through each repository within `git_repo_list` and performs the following actions in this order:
 
 1. Checks if the repository exists. The following actions are only performed on new repositories.
@@ -33,3 +35,5 @@ name | type | description
 The only dependency `getrepos` has is `rsync`.
 
 It uses `rsync -rvp` to copy the scripts and configs to the correct place.
+
+#### [Back](../index.html)
