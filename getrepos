@@ -1,29 +1,42 @@
 #!/usr/bin/env bash
 ##Created by Edward "edge226" Tunnah.
 
+## getrepos downloads a list of git repositories and checks out every branch. checking out the default branch at the end.
+
 source ./getrepos/getrepos.conf
 
 for repo in "${git_repo_list[@]}"
+## go through the list of repositories to download. These come from getrepos.conf
 do
   if [[ ! -d "$repo" ]]
+    ## If the repo directory does not exist then we have not cloned it.
     then
-    git clone "$git_repo/$repo$ext"
-    cd "$repo"
+    git clone "$git_repo/$repo$ext" ## clone the repository.
+    ## enter the repository.
+    cd "$repo" || exit 1
+    ## grab the default branch.
     branch=$(git branch)
+    ## Strip "* " off the front of the default branch.
     branch=${branch#* }
     #printf '\n%s %s\n' "Starting branch is:" "$branch"
     #printf '\n%s%s\n' "Printing out the remotes for: " "$repo"
     for line in $(git branch -r)
+    ## Grab all the remotes and process them one at a time.
     do
       if [[ "$line" != "origin/HEAD" ]] && [[ "$line" != "->" ]] && [[ "$line" != "origin/$branch" ]]
+        ## Dont bother trying to checkout the HEAD information or the default branch.
         then
+        ## Strip off origin/
         remote=${line##*/}
         #printf '\n%s\n' "$remote"
+        ## checkout the remote.
         git checkout "$remote"
       fi
     done
+    ## checkout the default branch
     git checkout "$branch"
-    cd ../
+    ## exit the repository.
+    cd ../ || exit 1
     printf '\n'
   fi
 done
