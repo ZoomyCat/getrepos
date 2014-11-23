@@ -36,7 +36,9 @@ It doesnt update the branches if you are not cloning the branch fresh.
 
 ## Dependencies
 
-The only dependency `getrepos` has is `rsync`.
+The only dependency `getrepos` has is `git`. It uses git to clone, find out the branches and check them out.
+
+The `install` script uses `rsync` in order to put the files in the appropriate places.
 
 It uses `rsync -rvp` to copy the scripts and configs to the correct place.
 
