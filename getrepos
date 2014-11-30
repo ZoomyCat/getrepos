@@ -3,37 +3,74 @@
 
 ## getrepos downloads a list of git repositories and checks out every branch. checking out the default branch at the end.
 
-source /etc/getrepos/getrepos.conf
+#source /etc/getrepos/getrepos.conf
+source ./getrepos.conf
 
-for repo in "${git_repo_list[@]}"
-## go through the list of repositories to download. These come from getrepos.conf
+unset cwd
+
+for git_repo in "${git_repos[@]}"
 do
-  if [[ ! -d "$repo" ]]
-    ## If the repo directory does not exist then we have not cloned it.
+  unset -n ref
+  if [[ "$cwd" != "" ]]
+    ## If this is not the first run through it will reset the location to create the
+    ## repository in the correct place.
     then
-    git clone "$git_repo/$repo$ext" ## clone the repository.
-    ## enter the repository.
-    cd "$repo" || exit 1
-    ## grab the default branch.
-    branch=$(git branch)
-    ## Strip "* " off the front of the default branch.
-    branch=${branch#* }
-    for branch_entry in $(git branch -r)
-    ## Grab all the remotes and process them one at a time.
-    do
-      if [[ "$branch_entry" != "origin/HEAD" ]] && [[ "$branch_entry" != "->" ]] && [[ "$branch_entry" != "origin/$branch" ]]
-        ## Dont bother trying to checkout the HEAD information or the default branch.
-        then
-        ## Strip off origin/
-        remote=${branch_entry##*/}
-        ## checkout the remote.
-        git checkout "$remote"
-      fi
-    done
-    ## checkout the default branch
-    git checkout "$branch"
-    ## exit the repository.
-    cd ../ || exit 1
-    printf '\n'
+    cd "$cwd" || exit 1
+  #   printf '\ncwd is now %s\n' "$cwd"
+  # else
+  #   pwd
   fi
+  ## Created a variable with the starting pwd.
+  cwd=$(pwd)
+  ## Grab the name of the github user or organisation from the github link..
+  name=${git_repo##*:}
+  ## make it lower case.
+  if [[ "$upper_to_lower" = "yes" ]]
+    then
+  name=${name,,}
+fi
+  ## Create the directory based on the user or organisation name.
+  mkdir -p "$name"
+  cd "$name" || exit 1
+  # printf '\n%s %s %s %s\n' "name and git_repo are" "$name" "and" "$git_repo"
+  if [[ "$dash_to_underline" = "yes" ]]
+    then
+  # Change the - to a _.
+  name=${name/-/_}
+  fi
+  ref="$name"
+  typeset -n ref
+  # printf '%s %s\n' "ref is now" "${ref[@]}"
+
+  for repo in "${ref[@]}"
+  ## go through the list of repositories to download. These come from getrepos.conf
+  do
+    # printf '\n%s %s\n' "repo equals " "$repo"
+    if [[ ! -d "$repo" ]]
+      ## If the repo directory does not exist then we have not cloned it.
+      then
+      git clone "$git_repo/$repo$ext" ## clone the repository.
+      ## enter the repository.
+      cd "$repo" || exit 1
+      ## grab the default branch.
+      branch=$(git symbolic-ref --short HEAD)
+      for branch_entry in $(git branch -r)
+      ## Grab all the remotes and process them one at a time.
+      do
+        if [[ "$branch_entry" != "origin/HEAD" ]] && [[ "$branch_entry" != "->" ]] && [[ "$branch_entry" != "origin/$branch" ]]
+          ## Dont bother trying to checkout the HEAD information or the default branch.
+          then
+          ## Strip off origin/
+          remote=${branch_entry##*/}
+          ## checkout the remote.
+          git checkout "$remote"
+        fi
+      done
+      ## checkout the default branch
+      git checkout "$branch"
+      ## exit the repository.
+      cd ../ || exit 1
+      printf '\n'
+    fi
+  done
 done
